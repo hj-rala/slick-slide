@@ -1,7 +1,7 @@
 <script type="text/javascript">
 $(function(){
 
-	//showroom roll
+	// 1 slick roll
 	var showStart = function(){
 
 		$slickElement = $('#slide');
@@ -26,8 +26,41 @@ $(function(){
 
 
 
+	// 2 lookbook slick slide
+	var $slickElementMain = $('#mainRoll');
+	var $status = $('.pagingInfo');
+	$slickElementMain.on('init reInit afterChange', function(event, slick, currentSlide, nextSlide){
+		//currentSlide is undefined on init -- set it to 0 in this case (currentSlide is 0 based)
+		var i = (currentSlide ? currentSlide : 0) + 1;
+		if (slick.slideCount < 10){
+			$status.html('<span>0'+ i +'</span>' + '&nbsp;&nbsp;/&nbsp;&nbsp;' + '<u>0'+slick.slideCount+'</u>');
+		} else {
+			$status.html('<span>'+ i +'</span>' + '&nbsp;&nbsp;/&nbsp;&nbsp;' + '<u>'+slick.slideCount+'</u>');
+		}
+	});
+	$slickElementMain.slick({
+		infinite: false,
+		variableWidth: true,
+		swipeToSlide: true,
+		arrows: true,
+		prevArrow: $('.lbLeft'),
+		nextArrow: $('.lbRight'),
+	});
+	$slickElementMain.on('mousedown', function(e){
+		$(this).one('mouseup', function(e){
+			$(this).off('mousemove');
+			$(this).find('.slick-list').removeClass('clickScale');
+		}).on('mousemove', function(e){
+			$(this).find('.slick-list').addClass('clickScale');
+		});
+	});
+	
+	
+});
+</script>
 
 
+<!-- 1 기본slick -->
 <div>
 	<div id="slide">
 		<div><img src="" alt="" /></div>
@@ -37,3 +70,96 @@ $(function(){
 	<a href="javascript:;" class="prevBtn"></a>
 	<a href="javascript:;" class="nextBtn"></a>
 </div>
+<!-- //1 기본slick -->
+
+
+
+<!-- 2 lookbook rolling -->
+<section id="mainRoll">
+	<div>
+		<a href="/lookbook/classic_winter?pnum=1">
+			<div class="img"><img src="../images/img/img_main_lb_classic.jpg" alt="" /></div>
+			<div class="txt">CLASSIC</div>
+		</a>
+	</div>
+	<div>
+		<a href="/lookbook/sporty_winter?pnum=1">
+			<div class="img"><img src="../images/img/img_main_lb_sporty.jpg" alt="" /></div>
+			<div class="txt">SPORTY</div>
+		</a>
+	</div>
+	<div>
+		<a href="/lookbook/outer">
+			<div class="img"><img src="../images/img/img_main_lb_outer.jpg" alt="" /></div>
+			<div class="txt">OUTER</div>
+		</a>
+	</div>
+	<div>
+		<a href="/lookbook/one_piece">
+			<div class="img"><img src="../images/img/img_main_lb_onepiece.jpg" alt="" /></div>
+			<div class="txt">ONE PIECE</div>
+		</a>
+	</div>
+	<div>
+		<a href="/lookbook/accessories?pnum=1">
+			<div class="img"><img src="../images/img/img_main_lb_acc.jpg" alt="" /></div>
+			<div class="txt">ACCESSORIES</div>
+		</a>
+	</div>
+	<div>
+		<a href="/lookbook/season">
+			<div class="img"><img src="../images/img/img_main_lb_season.jpg" alt="" /></div>
+			<div class="txt">SEASON</div>
+		</a>
+	</div>
+
+	<div>
+		<div class="endNoti">
+			<a href="/lookbook/classic_winter">
+				<div class="more"><img src="../images/img/img_mainroll_more.png" alt="more" /></div>
+				<p>더보기</p>
+			</a>
+		</div>
+	</div>
+</section>
+
+<div id="btnDirection">
+	<div class="dBt">
+		<div class="lbLeft arrow"><img src="../images/btn/btn_arrow_main_left.png" alt="" /></div>
+		<div class="lbRight arrow"><img src="../images/btn/btn_arrow_main_right.png" alt="" /></div>
+		<div class="pagingInfo"></div>
+	</div>
+</div>
+<!-- // 2 lookbook rolling -->
+
+
+<style>
+#mainRoll {width:100%;}
+#mainRoll:after {content:""; display:block; clear:both;}
+#mainRoll .slick-list {overflow:visible; -webkit-transition: all 0.6s ease;-moz-transition: all 0.6s ease;-ms-transition: all 0.6s ease;-o-transition: all 0.6s ease;transition: all 0.6s ease;}
+#mainRoll .slick-slide:nth-of-type(2n) {margin-top:70px;}
+#mainRoll .slick-list.clickScale {-ms-transform: scale(0.9); -moz-transform: scale(0.9); -webkit-transform: scale(0.9); -o-transform: scale(0.9); transform: scale(0.9);}
+#mainRoll .slick-slide {height:540px;margin:0 160px 0 0; -webkit-transition: all 0.6s ease;-moz-transition: all 0.6s ease;-ms-transition: all 0.6s ease;-o-transition: all 0.6s ease;transition: all 0.6s ease;box-shadow:-5px -4px 20px 0 rgba(0, 0, 0, 0.2), 4px 4px 20px 0 rgba(0, 0, 0, 0.2);}
+#mainRoll .slick-slide:hover {box-shadow:-5px -4px 20px 0 rgba(0, 0, 0, 0.3), 4px 4px 20px 0 rgba(0, 0, 0, 0.3);}
+#mainRoll .slick-slide a {position:relative; display:block; width:100%; height:100%;}
+#mainRoll .slick-slide a .img {overflow:hidden;}
+#mainRoll .slick-slide a:hover .img img {-ms-transform: scale(1.01); -moz-transform: scale(1.01); -webkit-transform: scale(1.01); -o-transform: scale(1.01); transform: scale(1.01);}
+#mainRoll .slick-slide a .img img {max-width:100%;-webkit-transition: all 0.5s ease;-moz-transition: all 0.5s ease;-ms-transition: all 0.5s ease;-o-transition: all 0.5s ease;transition: all 0.5s ease;overflow:hidden;}
+#mainRoll .slick-slide a .txt {position:absolute; left:-78px; bottom:73px; width:100%; font-size:43px; color:#ffef3e; font-weight:600; font-family:'NanumSquareRoundR'; letter-spacing:9.5px;-webkit-transition: all 0.5s ease;-moz-transition: all 0.5s ease;-ms-transition: all 0.5s ease;-o-transition: all 0.5s ease;transition: all 0.5s ease;overflow:hidden;}
+#mainRoll .slick-slide a:hover .txt {font-size:50px;}
+#mainRoll .endNoti {position:relative; width:450px; height:540px; background:#ececec;}
+#mainRoll .endNoti .more {position:absolute; left:50%; top:50%; margin:-36px 0 0 -36px;}
+#mainRoll .endNoti p {position:absolute; left:0; top:350px; width:100%; font-family:'NanumSquareRoundR'; font-size:19px; color:#505560; line-height:1.2; font-weight:600; text-align:center;}
+#btnDirection {position:relative; width:100%; padding:70px 0 60px 0; overflow:hidden; font-size:0;}
+#btnDirection .dBt {width:auto;text-align:center;position:relative;text-align:left;font-size:0;padding-top:40px;}
+#btnDirection .dBt .arrow {display:inline-block;width:70px;height:70px;border-radius:50%;background:#eee;line-height:70px;text-align:center;cursor:pointer;-webkit-transition: all 0.5s ease;-moz-transition: all 0.5s ease;-ms-transition: all 0.5s ease;-o-transition: all 0.5s ease;transition: all 0.5s ease;margin-right:20px;}
+#btnDirection .dBt .arrow img {display:inline-block;vertical-align:middle;margin-bottom:4px;}
+#btnDirection .dBt .arrow:hover {background:#ffef3e;}
+#btnDirection .pagingInfo {display:inline-block;margin-left:10px;font-family: 'Montserrat', sans-serif; font-size:15px; color:#eee;}
+#btnDirection .pagingInfo span {font-family: 'Montserrat', sans-serif; font-size:15px; color:#ffef3e; line-height:1.2; font-weight:600;}
+#btnDirection .pagingInfo u {font-family: 'Montserrat', sans-serif; font-size:15px; color:#eee; font-weight:600; text-decoration:none;}
+</style>
+	
+	
+	
+
